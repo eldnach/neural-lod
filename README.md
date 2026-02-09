@@ -16,25 +16,25 @@ The neural network is first trained using a standalone C++ application:
   <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/model.png?raw=true" alt="Assets">
 </p>
 
-We can use the model's error prediction to apply more conservative or aggersive LODs based on the assets's characetirstics. In the following example, the thinner Sword asset can maintain higher LODs at a distance. While the Boulder asset can pick more aggressive LODs:
+We can use the model's error prediction to apply more conservative or aggersive LODs based on the assets's characteristics. In the following example, the thinner Sword asset can maintain higher LODs at a distance. While the Boulder asset can pick more aggressive LODs:
 <p align="left">
   <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/lods.gif?raw=true" alt="LODs">
 </p>
 
-Neural inference is implemented in HLSL (compute) for GPU acceleration. By implementing culling and LOD selection on the GPU, we can indirectly render 100,000+ instances with very minimal overhead:
+Neural inference is implemented in HLSL (compute) for GPU acceleration. By implementing culling and LOD selection on the GPU, we can indirectly render many mesh instances with very minimal overhead: 
 <p align="left">
   <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/gpu-driven.png?raw=true" alt="Compute">
 </p>
 
 Feature selection is used to automatically train the model based on combination of different parameters. For example, by including the camera FOV as an input feature, the model can switch to higher quality LODs when zooming on objects:
-<p align="center">
+<p align="left">
   <img width="75%" src="https://github.com/eldnach/neural-lod/blob/main/images/fov.gif?raw=true" alt="FOV">
   <br>
   <em>Per-instance LOD level visualized on the top right of the screen </em>
 </p>
 
 ## Run the demo
-1. Open `neural-lods-unity` using the Unity Editor (version 6.4 beta and later)
+1. Open the `unity-sample` project using the Unity Editor (version 6.4 beta and later)
 2. Navigate to `Scenes` and open `SampleBasic` / `SampleIndirectRendering` 
 3. Press the Play button
 
