@@ -1,0 +1,44 @@
+## --- Unity Git LFS Configuration ---
+
+## 3D Assets
+*.fbx filter=lfs diff=lfs merge=lfs -text
+*.obj filter=lfs diff=lfs merge=lfs -text
+*.max filter=lfs diff=lfs merge=lfs -text
+*.blend filter=lfs diff=lfs merge=lfs -text
+
+## Audio Assets
+*.wav filter=lfs diff=lfs merge=lfs -text
+*.mp3 filter=lfs diff=lfs merge=lfs -text
+*.ogg filter=lfs diff=lfs merge=lfs -text
+
+## Texture & Image Assets
+*.png filter=lfs diff=lfs merge=lfs -text
+*.jpg filter=lfs diff=lfs merge=lfs -text
+*.jpeg filter=lfs diff=lfs merge=lfs -text
+*.tga filter=lfs diff=lfs merge=lfs -text
+*.psd filter=lfs diff=lfs merge=lfs -text
+*.exr filter=lfs diff=lfs merge=lfs -text
+*.hdr filter=lfs diff=lfs merge=lfs -text
+
+## AI & Data Assets (Crucial for your AI LOD project)
+*.asset filter=lfs diff=lfs merge=lfs -text
+
+## Unity Native Binary Files
+*.cubemap filter=lfs diff=lfs merge=lfs -text
+*.unitypackage filter=lfs diff=lfs merge=lfs -text
+*.compute filter=lfs diff=lfs merge=lfs -text
+
+## --- Metadata Handling ---
+## Ensure .meta files are treated as text and use LF line endings
+*.meta text eol=lf
+*.unity text eol=lf
+*.prefab text eol=lf
+*.asset text eol=lf
+*.mat text eol=lf
+*.controller text eol=lf
+
+## --- Merge Behavior ---
+## Unity YAML files should use the unityyaml merge driver if you have it configured
+*.unity merge=unityyaml
+*.prefab merge=unityyaml
+*.asset merge=unityyaml
