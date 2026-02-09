@@ -1,0 +1,12 @@
+# Python environment
+venv/
+ENV/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Data 
+*.json
+!scaler_config.json

@@ -1,0 +1,15 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "xcode-macos",
+      "displayName": "Xcode macOS",
+      "description": "Generate Xcode project",
+      "generator": "Xcode",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_PREFIX_PATH": "/opt/homebrew;/usr/local"
+      }
+    }
+  ]
+}
