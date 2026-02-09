@@ -1,30 +1,34 @@
 # Neural LOD Selector
-Training a small neural network for GPU-driven and content-aware LOD selection. The model predicts the pixel error for different LOD levels of a given 3D asset. This is used to pick more conservative (or aggressive) LODs based on predicted loss in image quality.
+Training a small network (using C++, Metal and Pytorch) to predict the pixel error of different LOD levels. The network is then embedded in a compute shader (HLSL), implementing neural LOD selection on the GPU. 
 
-The model is trained using a standalone C++ (Metal) simulation and pytorch:
+Combining this with Indirect Drawing, we can render 10,000's of instances more efficiency while applying GPU-side culling and LOD selection.
+
+The model can automatically learn the relationships between different input features (e.g. object distance, screen size, velocity, FOV...) and the loss in image quality for each LOD level. We can then use the predicted pixel error to pick an optimal LOD. 
+
+The neural network is first trained using a standalone C++ application:
 <p align="center">
-  <img width="100%" src="https://github.com/eldnach/neural-lods/blob/main/images/training_rock.gif?raw=true" alt="Training">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/training_rock.gif?raw=true" alt="Training">
   <br>
   <em>Training LOD levels: pixel error highlighted in green </em>
 </p>
 
 <p align="left">
-  <img width="100%" src="https://github.com/eldnach/neural-lods/blob/main/images/model.png?raw=true" alt="Assets">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/model.png?raw=true" alt="Assets">
 </p>
 
-The model perdicts a higher pixel error for the thin Sword, applying more conservative LODs to avoid decimating the delicate silouhette. While the chunkier boulder asset is picking more agressive LODs:
+We can use the model's error prediction to apply more conservative or aggersive LODs based on the assets's characetirstics. In the following example, the thinner Sword asset can maintain higher LODs at a distance. While the Boulder asset can pick more aggressive LODs:
 <p align="left">
-  <img width="100%" src="https://github.com/eldnach/neural-lods/blob/main/images/lods.gif?raw=true" alt="LODs">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/lods.gif?raw=true" alt="LODs">
 </p>
 
-Neural inference is implemented in a compute shader for GPU acceleration. By applying culling and LOD selection on the GPU, we can indirectly render 100,000+ instances with very minimal overhead:
+Neural inference is implemented in HLSL (compute) for GPU acceleration. By implementing culling and LOD selection on the GPU, we can indirectly render 100,000+ instances with very minimal overhead:
 <p align="left">
-  <img width="100%" src="https://github.com/eldnach/neural-lods/blob/main/images/gpu-driven.png?raw=true" alt="LODs">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/gpu-driven.png?raw=true" alt="Compute">
 </p>
 
-We can train the model to automatically learn error prediction based on combination of different input features, such as the camera FOV:
+Feature selection is used to automatically train the model based on combination of different parameters. For example, by including the camera FOV as an input feature, the model can switch to higher quality LODs when zooming on objects:
 <p align="center">
-  <img width="75%" src="https://github.com/eldnach/neural-lods/blob/main/images/fov.gif?raw=true" alt="LODs">
+  <img width="75%" src="https://github.com/eldnach/neural-lod/blob/main/images/fov.gif?raw=true" alt="FOV">
   <br>
   <em>Per-instance LOD level visualized on the top right of the screen </em>
 </p>
