@@ -21,7 +21,12 @@ We can use the model's error prediction to apply more conservative or aggersive 
   <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/lods.gif?raw=true" alt="LODs">
 </p>
 
-Neural inference is implemented in HLSL (compute) for GPU acceleration. By implementing culling and LOD selection on the GPU, we can indirectly render many mesh instances with very minimal overhead: 
+Neural inference is implemented in HLSL (compute) for GPU acceleration. The compute pass for ~130K instances is measured at ~0.5ms GPU time on a Macbook (M4). This includes inference, LOD selection and frustrum culling:
+<p align="left">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/gputime.png?raw=true" alt="Compute">
+</p>
+
+ By implementing culling and LOD selection on the GPU, we can indirectly render many mesh instances with very minimal overhead. Total GPU frame time for ~130K instances is measured at around 3.7ms: 
 <p align="left">
   <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/gpu-driven.png?raw=true" alt="Compute">
 </p>

@@ -378,6 +378,7 @@ public class NeuralLODRendererFeature : ScriptableRendererFeature
                     {
                         for (int i = 0; i < 5; i++) {
                             props.SetBuffer("vertexBuffer", r.lods[i].posBuffer);
+                            props.SetBuffer("uvBuffer", r.lods[i].uvBuffer);
                             props.SetBuffer("idxBuffer", r.lods[i].idxBuffer);
                             props.SetBuffer("colorBuffer", r.lods[i].colorBuffer);
                             props.SetBuffer("culledPositionsBuffer", r.culledPosBuffers[i]);
