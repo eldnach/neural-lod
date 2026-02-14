@@ -161,15 +161,6 @@ namespace fs = std::filesystem;
 
 int main( int argc, char* argv[] )
 {
-//    if (argc < 2) {
-//        std::cerr << "Usage: " << argv[0] << " <path_to_lods_folder>" << std::endl;
-//        return -1;
-//    }
-//    std::string assetPath = argv[1];
-//    //std::string assetPath = "/Users/damian.nachman/git/eldnach/neural-lods/metal-app/assets";
-//    if (!assetPath.empty() && assetPath.back() != '/') {
-//        assetPath += '/';
-//    }
     
     auto startTime = std::chrono::high_resolution_clock::now();
     
@@ -255,11 +246,23 @@ int main( int argc, char* argv[] )
             int texBPP = 4; // STBI_rgb_alpha = 4 bytes per pixel (8 bit per channel)
             std::string texturePath = pathPrefix + "assets/texture.png";
             unsigned char* rawPixels = stbi_load(texturePath.c_str(), &texWidth, &texHeight, &texChannels, STBI_rgb_alpha);
+            size_t texDataSize;
+
             if (!rawPixels) {
-                std::cerr << "Failed to load texture: " << texturePath << std::endl;
-            }
-            size_t dataSize = texWidth * texHeight * texBPP;
-            std::vector<uint8_t> textureData(rawPixels, rawPixels + dataSize);
+                std::cout << "Failed to load texture: " << texturePath << std::endl;
+                texWidth = 512;
+                texHeight = 512;
+                texChannels = 4;
+                texDataSize = texWidth * texHeight * texChannels;
+                rawPixels = new unsigned char[texDataSize];
+
+                for (size_t i = 0; i < texDataSize; i++)
+                {
+                    rawPixels[i] = 0;
+                }
+            } 
+            texDataSize = texWidth * texHeight * texBPP;
+            std::vector<uint8_t> textureData(rawPixels, rawPixels + texDataSize);
             stbi_image_free(rawPixels);
 
             // Load shaders from disk
@@ -461,12 +464,12 @@ int main( int argc, char* argv[] )
                     eventsCount = SDL_PollEvent(&event);
                 }
                 
-                if (quit) break;
-                
                 std::shared_ptr<TrainingData> trainingData = simulation->Update(winWidth, winHeight);
                 if (trainingData == nullptr) {
                     quit = true;
                 }
+
+                if (quit) break;
 
                 // Metal render loop
                 // ------------------------------------------------------
