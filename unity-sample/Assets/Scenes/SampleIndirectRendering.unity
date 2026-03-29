@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LODGradientOverlay
   data: {fileID: 11400000, guid: ac8f607a4c4364e20a07aec60cb863a8, type: 2}
-  offset: {x: 481, y: 492.4}
+  offset: {x: 478.9, y: 491.3}
   scale: 0.71
   fontSize: 20
 --- !u!114 &1379394632

@@ -7,7 +7,7 @@ public class LODGradientOverlay : MonoBehaviour
     private Texture2D _texture;
     private GUIStyle _textStyle;
 
-    [Header("Layout Settings")]
+    [Header("Layout Settings (Based on 1920x1080)")]
     public Vector2 offset = Vector2.zero; 
     [Range(0.1f, 2.0f)]
     public float scale = 1.0f;
