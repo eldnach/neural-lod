@@ -18,7 +18,7 @@ The neural network is first trained using a standalone C++ application:
 
 We can use the error prediction to apply more conservative (or aggersive) LODs based on the assets's characteristics. The thinner Sword asset can maintain higher LODs at a distance, While the Boulder asset picks more aggressive LODs. Feature selection is used to train the model based on combination of different parameters. By including the camera FOV as an input feature, the model can also switch to higher quality LODs when zooming on objects:
 <p align="left">
-  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/lod-zoom.gif?raw=true" alt="LODs">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/lod-zoom-hq.gif?raw=true" alt="LODs">
 </p>
 
 Neural inference is implemented in HLSL (compute) for GPU acceleration. The compute pass for ~130K instances is measured at ~0.5ms GPU time on a Macbook (M4). This includes inference, LOD selection and frustrum culling:
@@ -29,6 +29,9 @@ Neural inference is implemented in HLSL (compute) for GPU acceleration. The comp
  By implementing culling and LOD selection on the GPU, we can indirectly render many mesh instances with very minimal overhead. Total GPU frame time for ~130K instances is measured at around 3.7ms: 
 <p align="left">
   <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/gpu-driven.png?raw=true" alt="Compute">
+</p>
+<p align="left">
+  <img width="100%" src="https://github.com/eldnach/neural-lod/blob/main/images/fov.gif?raw=true" alt="Compute">
 </p>
 
 ## Run the demo
